@@ -58,6 +58,3 @@ print(score)
 
 ```
 
-
-Do you want me to do that?
-```
