@@ -6,90 +6,69 @@ Lightweight, research-grade Python library for computing **novelty and informati
 
 ---
 
-## Installation
+Overview
 
-```bash
-pip install git+https://github.com/yourname/identity-geometry.git
+This repository provides a minimal, production-ready method for measuring informational novelty in Large Language Model (LLM) outputs.
 
+The metric answers one question:
 
-This project provides a minimal, production-ready way to measure informational novelty in Large Language Model (LLM) outputs.
+How much new information does this text contain from the model’s own perspective?
 
-The question it answers is simple:
+Unlike embedding similarity or sampling-based diversity metrics, this approach uses signals internal to the model, producing a deterministic and auditable score.
 
-How much new information does this text contain from the model’s point of view?
+What “Novelty” Means
 
-Instead of relying on embeddings, sampling, or human-style creativity metrics, this approach measures novelty using signals internal to the model itself. The result is a deterministic, auditable score that reflects how strongly the model reacts to a given input.
+Novelty here does not mean creativity or style.
 
-What “Novelty” Means Here
-
-In this context, novelty does not mean creativity, style, or semantic distance.
-
-Novelty means:
+A text is considered novel if:
 
 The model makes a confident, non-generic prediction
 
-The input meaningfully activates the model’s parameters
+The input meaningfully activates model parameters
 
-The signal is not inflated by long or repetitive text
+The score is not inflated by length or repetition
 
-In other words, the text contains information that is non-trivial for the model.
+This is model-relative informational novelty.
 
-How It Works (Conceptually)
+How It Works
 
-The novelty score combines three internal signals:
+The score combines three internal signals:
 
-Prediction Confidence
-Measures how concentrated the model’s next-token prediction is. Generic text produces flat, uniform predictions. Informative text produces sharper ones.
+Prediction confidence
 
-Parameter Sensitivity
-Measures how strongly the input affects the model’s internal parameters. Inputs the model has truly “learned from” tend to activate parameters more strongly.
+Parameter sensitivity
 
-Length Normalization
-Penalizes long or repetitive inputs so novelty reflects information density, not size.
+Length normalization
 
-These components are combined into a single scalar score.
+These are combined into a single scalar value.
 
 How to Interpret the Score
 
 High score
-The model is confident and strongly affected by the input. The text is genuinely informative relative to the model.
+The input is informative and strongly affects the model.
 
 Medium score
-The text is mostly predictable but contains some meaningful signal.
+Mostly predictable with some meaningful signal.
 
 Low score
-The text is generic, boilerplate, repetitive, or well-memorized by the model.
+Generic, boilerplate, or well-memorized content.
 
 Why This Is Useful
 
-This metric is useful when you need:
+Deterministic novelty scoring
 
-Deterministic novelty scoring (no randomness)
+Model-aware evaluation
 
-Model-aware evaluation instead of surface heuristics
+Auditable and production-safe
 
-Auditable signals suitable for production or regulated environments
-
-Common use cases include:
+Common uses:
 
 Prompt quality evaluation
 
 Dataset curation and deduplication
 
-Memorization or leakage detection
+Memorization detection
 
 Redundancy filtering
 
-Agent self-evaluation and introspection
-
-Design Principles
-
-Deterministic: no sampling, no randomness
-
-Model-internal: uses the model’s own signals
-
-Scalable: supports layer-filtered computation
-
-Auditable: simple, interpretable components
-
-Minimal: single-file implementation
+Agent self-evaluation
