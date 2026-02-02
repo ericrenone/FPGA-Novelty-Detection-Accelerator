@@ -1,0 +1,128 @@
+# Novelty Functional - Combined Single File
+
+A minimal implementation combining Fisher Information, KL Divergence, and Novelty metrics for LLM outputs.
+
+## Files
+
+- `novelty_functional.py` - Combined single-file implementation containing all classes and configurations
+- `.github/workflows/super-linter.yml` - GitHub Actions workflow for automated linting
+- `.github/linters/` - Configuration files for various Python linters
+
+## Setup GitHub Super-Linter
+
+### Quick Start
+
+1. **Copy the workflow file** to your repository:
+   ```bash
+   mkdir -p .github/workflows
+   cp .github/workflows/super-linter.yml .github/workflows/
+   ```
+
+2. **Copy linter configurations** (optional but recommended):
+   ```bash
+   mkdir -p .github/linters
+   cp .github/linters/* .github/linters/
+   ```
+
+3. **Push to your repository**:
+   ```bash
+   git add .
+   git commit -m "Add Super-Linter workflow"
+   git push
+   ```
+
+The Super-Linter will automatically run on:
+- Pull requests to `main` or `master` branches
+- Direct pushes to branches (excluding `main` and `master`)
+
+### Linters Enabled
+
+The workflow enables the following Python linters:
+- **Black** - Code formatter
+- **Flake8** - Style guide enforcement
+- **Pylint** - Code analysis
+- **isort** - Import sorting
+- **mypy** - Static type checking
+
+### Configuration Files
+
+Linter configurations are stored in `.github/linters/`:
+- `.flake8` - Flake8 configuration (max line length: 100)
+- `.python-lint` - Pylint configuration
+- `.isort.cfg` - isort configuration
+- `.mypy.ini` - mypy configuration
+
+### Customization
+
+To customize which linters run, edit `.github/workflows/super-linter.yml` and modify the `VALIDATE_PYTHON_*` environment variables:
+
+```yaml
+env:
+  VALIDATE_PYTHON_BLACK: true    # Set to false to disable
+  VALIDATE_PYTHON_FLAKE8: true
+  VALIDATE_PYTHON_PYLINT: true
+  VALIDATE_PYTHON_ISORT: true
+  VALIDATE_PYTHON_MYPY: true
+```
+
+### Running Locally
+
+You can run Super-Linter locally using Docker:
+
+```bash
+docker run --rm \
+  -e RUN_LOCAL=true \
+  -e VALIDATE_PYTHON_BLACK=true \
+  -e VALIDATE_PYTHON_FLAKE8=true \
+  -v $(pwd):/tmp/lint \
+  ghcr.io/super-linter/super-linter:latest
+```
+
+## Usage
+
+```python
+from novelty_functional import (
+    NoveltyFunctional,
+    NoveltyConfig,
+    FisherInfo,
+    KLDivergence
+)
+
+# Initialize with default configuration
+novelty = NoveltyFunctional()
+
+# Or with custom configuration
+config = NoveltyConfig(
+    attention_normalizer=256.0
+)
+novelty = NoveltyFunctional(config)
+
+# Compute novelty score
+score = novelty.compute(text, model, tokenizer)
+```
+
+## Module Structure
+
+The combined file contains:
+
+1. **Configuration Classes**:
+   - `FisherMethod` (Enum)
+   - `FisherConfig`
+   - `KLConfig`
+   - `NoveltyConfig`
+
+2. **Core Classes**:
+   - `FisherInfo` - Fisher information trace estimator
+   - `KLDivergence` - KL divergence computations
+   - `NoveltyFunctional` - Main novelty metric calculator
+
+## Requirements
+
+```
+torch
+numpy
+```
+
+## License
+
+Version: 0.1.0
