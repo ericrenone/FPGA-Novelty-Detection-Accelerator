@@ -20,5 +20,4 @@ Low novelty implies generic, memorized, or low-information content.
 - **Real-time dynamic simulation** with live visualization.  
 - **Seeded, reproducible experiments** for deterministic results.  
 - **Console + popout visualization** for KL, Fisher, and Novelty.  
-- **Compatible with any **HuggingFace causal LM**.  
 
