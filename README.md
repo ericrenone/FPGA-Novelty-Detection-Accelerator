@@ -1,4 +1,4 @@
-# Novelty Functional for LLM Outputs
+# novelty tool for Large Language Models (LLMs)
 
 ## Core
 
