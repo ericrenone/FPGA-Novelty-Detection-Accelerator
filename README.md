@@ -1,7 +1,7 @@
 # Novelty Detection for Federated Learning
 **Lightweight Anomaly Detection at Scale**
 
-Detects novel/anomalous text inputs in **federated learning (FL)** with minimal resource usage. Optimized for **1M–100M devices**, reducing communication overhead by **~80%** while preserving model accuracy.
+Detects novel/anomalous text inputs in **federated learning (FL)** with minimal resource usage. 
 
 ---
 
