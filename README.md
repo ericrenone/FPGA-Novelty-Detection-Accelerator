@@ -2,6 +2,8 @@
 
 **Direct hardware implementation of neuromorphic primitives on FPGA achieves orders-of-magnitude lower system-level energy per event and deterministic real-time behavior compared to CPU software execution, demonstrating the architectural advantages of specialized silicon for edge AI workloads.**
 
+**This is likely the world’s most resource-efficient FPGA novelty detector implemented on <$10 hardware, prioritizing deterministic sub-microsecond operation and ultra-low power over model depth.**
+
 ---
 
 ## 1. Overview
