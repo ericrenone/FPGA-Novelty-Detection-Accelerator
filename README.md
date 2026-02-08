@@ -1,6 +1,6 @@
 # FPGA Novelty Detection Accelerator
 
-**Hardware-Software-Hybrid Accelerated Leaky Integrator Neuron for Deterministic Anomaly Detection**
+**Direct hardware implementation of neuromorphic primitives on FPGA achieves orders-of-magnitude lower system-level energy per event and deterministic real-time behavior compared to CPU software execution, demonstrating the architectural advantages of specialized silicon for edge AI workloads.**
 
 ---
 
