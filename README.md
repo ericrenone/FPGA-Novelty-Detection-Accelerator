@@ -35,7 +35,7 @@ $$
  |-----------------------|-------------------------------------------------------------------------------|
  | **Design Paradigm**   | Non-von Neumann: Compute and memory collocated ($\mathcal{I} \equiv \mathcal{M} \equiv \epsilon$) |
  | **Energy Efficiency** | $\rho = 3.24 \text{ nJ/bit}$, **2,265×** improvement over x86_64 baseline  |
- | **Formal Logic**      | FSM with $|Q|=2^{16}$ states, Lambda Calculus verified, 1D Cellular Automaton behavior |
+ | **Formal Logic**      | Finite State Machine with Lambda Calculus verified, 1D Cellular Automaton behavior
 
 ---
 
