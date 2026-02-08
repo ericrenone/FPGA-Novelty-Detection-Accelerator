@@ -1,73 +1,85 @@
 # FPGA Novelty Detection Accelerator
+
 **Hardware-Software-Hybrid Accelerated Leaky Integrator Neuron for Deterministic Anomaly Detection**
 
 ---
 
-## **1. Overview**
-A **minimalist, hardware-accelerated leaky integrator neuron** implemented on the **Gowin Tang Nano 9K FPGA**. Designed for **real-time novelty detection** with **deterministic timing** and **ultra-low resource usage**.
+## 1. Overview
+
+A **minimalist, hardware-accelerated leaky integrator neuron** implemented on the **Gowin Tang Nano 9K FPGA**. This project is designed for **real-time novelty detection** with **deterministic timing** and **ultra-low resource usage**, specifically targeting **edge-AI applications** where power and thermal constraints are critical.
 
 ---
 
-## **2. Technical Architecture**
-### **2.1 Core Logic**
-- **State Transition Function**:
-  `f(ϵ, x) = (ϵ >> 1) + x`
-  - `ϵ`: 16-bit energy accumulator.
-  - `x`: 8-bit UART input.
-  - `>> 1`: Bit-shift decay (division-by-2).
+## 2. Technical Architecture
 
-### **2.2 Hardware-Software Co-Design**
-- **Digital Twin**: Bit-exact Python mirror for verification.
-- **UART Echo**: Real-time benchmarking.
-- **LED Visualization**: Novelty event feedback.
+### 2.1 Core Logic
+The system implements a **silicon-native leaky integrator** with a simplified state transition function to ensure **multiplier-less efficiency**:
 
----
+- **Function**: `f(ϵ, x) = (ϵ >> 1) + x`
+- **ϵ**: 16-bit energy accumulator.
+- **x**: 8-bit UART input.
+- **>> 1**: Bit-shift decay, representing a biological-style division-by-2 energy dissipation.
 
-## **3. Performance Metrics**
-| Metric                | FPGA (Hardware)       | CPU (Software)       |
-|-----------------------|-----------------------|-----------------------|
-| **Compute Latency**    | 37.037 ns              | N/A                   |
-| **Transport Latency**  | ~86.8 µs (UART)       | N/A                   |
-| **Jitter**            | < 0.5 µs              | High (OS-dependent)   |
-| **Numeric Format**    | Q16.0 Fixed-Point     | 64-bit Float/Int      |
-
-### **Key Insights**
-- **I/O-Bound System**: Transport latency dominates compute time.
-- **Deterministic Timing**: FPGA achieves **< 0.5 µs jitter**.
-- **Energy Efficiency**: Multiplier-less design minimizes power.
+### 2.2 Hardware-Software Co-Design
+- **Digital Twin**: A bit-exact Python mirror ensures verification of the FPGA logic.
+- **UART Echo**: A real-time benchmarking loop enables end-to-end (E2E) timing analysis.
+- **LED Visualization**: Onboard LEDs provide immediate feedback; they activate when energy density exceeds a quantized ROM weight.
 
 ---
 
-## **4. Uniqueness**
-1. **Memory Wall Justification**: Exposes **1,000x latency penalty** of serial transport.
-2. **Q-Format Stability**: 16-bit fixed-point suffices for bio-inspired dynamics.
-3. **Deterministic Timing**: Temporal precision > numerical precision.
-4. **Optimal Energy**: Shift-accumulate logic reaches theoretical efficiency.
-5. **Formal Veracity**: Lambda Calculus mapping ensures correctness.
+## 3. SOTA Thermodynamic & Energy Metrics
+
+The project utilizes a **5x5x5 Burst Mode** (5 Seeds × 5 Parallel Instances × 25 Rounds) to quantify the **"Energy Efficiency Cliff"**:
+
+| Metric                | X86_64 Complex (CPU) | GOWIN Nano 9K (FPGA) |
+|-----------------------|----------------------|---------------------|
+| Mean Power Draw       | 3.5216 W              | 0.4500 W            |
+| Energy Density        | 7,336,591.47 nJ/bit   | 3.2387 nJ/bit      |
+| Thermal Advantage     | Baseline             | 87.22% Reduction    |
+| Deterministic Jitter  | High (OS-dependent)  | < 0.5 µs           |
+| Numeric Format        | 64-bit Float/Int     | Q16.0 Fixed-Point   |
 
 ---
 
-## **5. File Structure**
-| File                | Description                          |
-|---------------------|--------------------------------------|
-| `Verilog.txt`       | FPGA RTL (Tang Nano 9K).             |
-| `Benchmark.py`      | Anomaly injection & latency test.    |
-| `FGPA_CPU_Test.py`  | Real-time visualization dashboard.  |
+## 4. Uniqueness
+
+- **Memory Wall Justification**: Exposes the **1,000x latency penalty** of serial transport compared to compute time.
+- **Deterministic Timing**: Temporal precision is prioritized over numerical precision, achieving **sub-microsecond jitter**.
+- **Optimal Energy**: The shift-accumulate logic reaches theoretical efficiency by removing power-hungry multipliers.
+- **Formal Veracity**: Lambda Calculus mapping ensures logical correctness through the hardware-software mirror.
 
 ---
 
-## **6. Conclusions**
-- **Hardware Superiority**: FPGA provides **deterministic latency**.
-- **Neuromorphic Success**: Leaky integrator accurately models "energy" decay.
-- **I/O Bottleneck**: UART transport limits performance, not compute.
-- **Reproducibility**: Fixed seeds ensure scientific repeatability.
+## 5. File Structure
+
+| File                        | Description                                                                 |
+|-----------------------------|-----------------------------------------------------------------------------|
+| `Verilog_Power_Metrics.v`    | FPGA RTL containing the Leaky Integrator, UART RX/TX, and Weight ROM.       |
+| `Power_Metrics_Test.py`     | Multi-threaded Python Research Rig for anomaly injection and energy density calculation. |
+| `test.png`                  | Production telemetry showing the real-time thermal heatmap and summary report. |
 
 ---
 
-## **7. Next Steps**
-- **Adaptive Thresholding**: Implement STDP for dynamic learning.
-- **Functional HDL Port**: Rewrite in Clash/Bluespec for Lambda Calculus integration.
-- **Scalability**: Extend for federated learning (FL).
+## 6. Scientific Conclusions
+
+- **Hardware Superiority**: The FPGA provides a **deterministic thermal envelope**, whereas CPU draw is subject to "Silicon Jitter" and OS-driven fluctuations.
+- **Neuromorphic Success**: The leaky integrator accurately models energy decay, proving that **16-bit fixed-point is sufficient** for bio-inspired dynamics.
+- **I/O Bottleneck**: UART transport remains the primary performance limit, not the underlying compute logic.
 
 ---
-This project demonstrates **deterministic, low-power anomaly detection** on **cheap FPGAs**, paving the way for **edge AI** and **large-scale device networks**.
+
+## 7. Next Steps
+
+- **Adaptive Thresholding**: Implementing **STDP (Spike-Timing-Dependent Plasticity)** for dynamic learning.
+- **Functional HDL Port**: Transitioning the design to **Clash or Bluespec** for deeper Lambda Calculus integration.
+- **Federated Scalability**: Extending the architecture for **large-scale device networks** and federated learning (FL).
+
+---
+
+## 8. Quick Start
+
+### Hardware Setup
+1. Flash `Verilog_Power_Metrics.v` to your **Gowin Tang Nano 9K**.
+2. Connect via USB (ensure your port is set to `COM6` or update the Python script).
+
+
